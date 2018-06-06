@@ -1,21 +1,13 @@
 package nl.hu.sie.bep.friendspammer;
 
-import java.net.UnknownHostException;
-import java.util.Arrays;
-
-import org.bson.Document;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoClientURI;
-import com.mongodb.MongoCredential;
-import com.mongodb.MongoException;
-import com.mongodb.ServerAddress;
+import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.UnknownHostException;
 
 public class MongoSaver {
 	
@@ -41,8 +33,8 @@ public class MongoSaver {
 			        .append("asHtml", html);
 			c.insertOne(doc);
 		} catch (MongoException mongoException) {
-			System.out.println("XXXXXXXXXXXXXXXXXX ERROR WHILE SAVING TO MONGO XXXXXXXXXXXXXXXXXXXXXXXXXX");
-			mongoException.printStackTrace();
+			Logger logger = LoggerFactory.getLogger(MongoSaver.class);
+			logger.info("XXXXXXXXXXXXXXXXXX ERROR WHILE SAVING TO MONGO XXXXXXXXXXXXXXXXXXXXXXXXXX");
 			success = false;
 		}
 		
@@ -51,9 +43,9 @@ public class MongoSaver {
 	}
 	
 	
-	public static void main(String ...args) throws UnknownHostException {
-		
-		System.out.println("test");
+	public static void main(String ...args) {
+		Logger logger = LoggerFactory.getLogger(MongoSaver.class);
+		logger.info("test");
 	}
 
 }
