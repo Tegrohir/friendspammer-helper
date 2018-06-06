@@ -19,12 +19,12 @@ build:
       version: 3.5.2
 
 sonar:
-# Steps make up the actions in your pipeline
-# Read more about steps on our dev center:
-# http://devcenter.wercker.com/docs/steps/index.html
+  # Steps make up the actions in your pipeline
+  # Read more about steps on our dev center:
+  # http://devcenter.wercker.com/docs/steps/index.html
   steps:
   # https://github.com/wercker/step-maven
-     - wercker/maven:
-     goals: clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dmaven.test.failure.ignore=true -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=tegrohir-github -Dsonar.login=dc07623b7335df840fe024e848a2ce01b091e5f6
-     cache_repo: true
-     version: 3.5.2
+    - wercker/maven:
+      goals: clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dmaven.test.failure.ignore=true -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=tegrohir-github -Dsonar.login=dc07623b7335df840fe024e848a2ce01b091e5f6
+      cache_repo: true
+      version: 3.5.2
