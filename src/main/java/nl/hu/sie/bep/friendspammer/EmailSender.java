@@ -20,21 +20,7 @@ public class EmailSender {
 
 	public static void sendEmail(String subject, String to, String messageBody, boolean asHtml) {
 
-		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.mailtrap.io");
-		props.put("mail.smtp.port", "2525");
-		props.put("mail.smtp.auth", "true");
-
-		String username = "YOUR MAIL USERNAME";
-		String password = "YOUR MAIL PASSWORD";
-
-		Session session = Session.getInstance(props,
-				  new javax.mail.Authenticator() {
-					@Override
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(username, password);
-					}
-				  });
+		Session session = getSession();
 		try {
 
 			Message message = new MimeMessage(session);
@@ -59,35 +45,21 @@ public class EmailSender {
 
 	public static void sendEmail(String subject, String[] toList, String messageBody, boolean asHtml) {
 
-		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.mailtrap.io");
-		props.put("mail.smtp.port", "2525");
-		props.put("mail.smtp.auth", "true");
-		
-		String username = "YOUR MAIL USERNAME";
-		String password = "YOUR MAIL PASSWORD";
-
-		Session session = Session.getInstance(props,
-				  new javax.mail.Authenticator() {
-					@Override
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(username, password);
-					}
-				  });
+		Session session = getSession();
 		try {
 
-			for (int index = 0; index < toList.length; index++) {
-			
+			for (String aToList : toList) {
+
 				Message message = new MimeMessage(session);
 				message.setFrom(new InternetAddress("spammer@spammer.com"));
 				message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(toList[index]));
+						InternetAddress.parse(aToList));
 				message.setSubject(subject);
-				
+
 				if (asHtml) {
-						message.setContent(messageBody, "text/html; charset=utf-8");
+					message.setContent(messageBody, "text/html; charset=utf-8");
 				} else {
-					message.setText(messageBody);	
+					message.setText(messageBody);
 				}
 				Transport.send(message);
 
@@ -100,5 +72,23 @@ public class EmailSender {
 			throw new IllegalArgumentException(e);
 		}
 	}
-	
+
+	private static Session getSession() {
+		Properties props = new Properties();
+		props.put("mail.smtp.host", "smtp.mailtrap.io");
+		props.put("mail.smtp.port", "2525");
+		props.put("mail.smtp.auth", "true");
+
+		String username = "YOUR MAIL USERNAME";
+		String password = "YOUR MAIL PASSWORD";
+
+		return Session.getInstance(props,
+				  new javax.mail.Authenticator() {
+					@Override
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(username, password);
+					}
+				  });
+	}
+
 }
