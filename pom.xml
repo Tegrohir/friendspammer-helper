@@ -25,7 +25,26 @@
 				</configuration>
 			</plugin>
 		</plugins>
+			<extensions>
+				<extension>
+					<groupId>io.packagecloud.maven.wagon</groupId>
+					<artifactId>maven-packagecloud-wagon</artifactId>
+					<version>0.0.6</version>
+				</extension>
+			</extensions>
+
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>packagecloud-myrepo</id>
+			<url>packagecloud+https://packagecloud.io/test-user/myrepo</url>
+		</repository>
+		<snapshotRepository>
+			<id>packagecloud-myrepo</id>
+			<url>packagecloud+https://packagecloud.io/test-user/myrepo</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<dependencies>
 
@@ -47,5 +66,7 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
+
+
 	</dependencies>
 </project>
