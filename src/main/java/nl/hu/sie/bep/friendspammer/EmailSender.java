@@ -1,5 +1,8 @@
 package nl.hu.sie.bep.friendspammer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -27,6 +30,7 @@ public class EmailSender {
 
 		Session session = Session.getInstance(props,
 				  new javax.mail.Authenticator() {
+					@Override
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication(username, password);
 					}
@@ -86,8 +90,10 @@ public class EmailSender {
 					message.setText(messageBody);	
 				}
 				Transport.send(message);
-	
-				System.out.println("Done");
+
+
+				Logger logger = LoggerFactory.getLogger(MongoSaver.class);
+				logger.info("Done");
 			}
 
 		} catch (MessagingException e) {
